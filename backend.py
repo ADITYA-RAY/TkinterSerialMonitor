@@ -1,24 +1,21 @@
 import serial 
 import time
-import numpy as np
-import matplotlib.pyplot as plt
-import threading
-import numpy
-
+# import numpy as np
+# import matplotlib
+# import matplotlib.pyplot as plt
+# import numpy
+# matplotlib.use('agg')
 
 
 class backend():
-    def __init__(self,port,baudrate):
-        self.mcu = serial.Serial(port=port,baudrate=baudrate,timeout=0.1)
+    def __init__(self):
+        self.mcu = ""
         self.data = ""
         self.x_axis = 0
-        plt.ion()
-        self.fig = plt.figure()
-        self.numx = [[0]*2]*2
-        self.numy = [[0]*2]*2
-        self.colors=["r-","b-"]
+        
   
-    def connect(self):
+    def connect(self,port,baudrate):
+        self.mcu = serial.Serial(port=port,baudrate=baudrate,timeout=0.1)
         self.mcu.write(bytes("1",'utf-8'))
         time.sleep(0.05)
 
@@ -30,19 +27,23 @@ class backend():
             return decoded
         return 
             
-    def plot(self):
-        while True:
-            graphs = self.getData()
-            if graphs:
-                for i in range(len(graphs)):
-                    self.numx[i] = [self.numx[i][1],self.x_axis]
-                    self.numy[i] = [self.numy[i][1],int(graphs[i])]
-                    plt.plot(self.numx[i],self.numy[i],self.colors[i])
-                    self.fig.canvas.draw()     
-                    self.fig.canvas.flush_events()             
+    # def plotChannel(self,graphs):
+    #     plt.ion()
+    #     self.fig = plt.figure()
+    #     self.numx = [[0]*2]*2
+    #     self.numy = [[0]*2]*2
+    #     self.colors=["r-","b-"]
+    #     while True:
+    #         if graphs:
+    #             for i in range(len(graphs)):
+    #                 self.numx[i] = [self.numx[i][1],self.x_axis]
+    #                 self.numy[i] = [self.numy[i][1],int(graphs[i])]
+    #                 plt.plot(self.numx[i],self.numy[i],self.colors[i])
+    #                 self.fig.canvas.draw()     
+    #                 self.fig.canvas.flush_events()             
 
-if __name__ == "__main__":
-    process = backend('/dev/ttyACM0','115200')
-    process.connect()
-    process.plot()
+# if __name__ == "__main__":
+#     process = backend()
+#     process.connect('/dev/ttyACM0','115200')
+#     process.plot()
 
