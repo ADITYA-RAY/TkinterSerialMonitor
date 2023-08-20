@@ -44,7 +44,5 @@ class backend():
 if __name__ == "__main__":
     process = backend('/dev/ttyACM0','115200')
     process.connect()
-    # process.getData()
     process.plot()
-    # thread.start()
 
